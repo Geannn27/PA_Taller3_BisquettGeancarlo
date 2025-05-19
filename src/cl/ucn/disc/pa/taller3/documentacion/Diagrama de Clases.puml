@@ -1,0 +1,111 @@
+@startuml
+'https://plantuml.com/class-diagram
+package cl.ucn.disc.pa.taller3 as taller3{
+package dominio{
+class Usuario {
+  - nombre: String
+  - rut: String
+  - correo: String
+  - contrasenia: String
+
+  + Usuario(nombre: String, rut: String, correo: String, contrasenia: String)
+  + getNombre(): String
+  + getRut(): String
+  + getCorreo(): String
+  + validarContrasenia(clave: String): boolean
+}
+abstract class OfertaAcademica {
+  - codigo: String
+  - titulo: String
+  - descripcion: String
+  - duracionDias: int
+
+  + OfertaAcademica(...)
+  + getCodigo(): String
+  + getResumen(): String
+}
+class Ayudantia extends OfertaAcademica {
+  - asignatura: String
+  - rolAyudante: String
+  - horasSemanales: int
+  - promedioMinimo: double
+  - tipoAyudantia: String
+
+  + Ayudantia(...)
+}
+class Capstone extends OfertaAcademica {
+  - fechaInicio: Date
+  - nombreEmpresa: String
+  - nombreGuia: String
+  - tipoProyecto: String
+  - duracionMeses: int
+  - carrerasHabilitadas: String[]
+  - cantidadEstudiantesMin: int
+
+  + Capstone(...)
+}
+class PracticaPreProfesional extends OfertaAcademica {
+  - fechaInicio: Date
+  - nombreEmpresa: String
+  - nombreGuia: String
+  - tieneRemuneracion: boolean
+
+  + PracticaPreProfesional(...)
+}
+class ContenedorOferta {
+  - ofertas: OfertaAcademica[]
+  - cantidadActual: int
+  - cantidadMaxima: int
+
+  + agregar(oferta: OfertaAcademica): void
+  + obtener(codigo: String): OfertaAcademica
+  + eliminar(codigo: String): void
+  + listar(): OfertaAcademica[]
+}
+}
+package servicio{
+
+interface SistemaOfertas {
+  + registrarUsuario(nombre: String, rut: String, correo: String, contrasenia: String): void
+  + iniciarSesion(rut: String, contrasenia: String): boolean
+  + ingresarOferta(): void
+  + buscarOferta(codigo: String): OfertaAcademica
+  + verOfertas(): void
+  + editarOferta(codigo: String): void
+  + eliminarOferta(codigo: String): void
+  + verPerfil(): void
+  + editarPerfil(nombre: String, correo: String): void
+  + cerrarSesion(): void
+}
+
+class SistemaOfertasUCN {
+  - usuarios: Usuario[]
+  - ofertas: ContenedorOferta
+  - usuarioActual: Usuario
+  + registrarUsuario()
+  + iniciarSesion()
+  +ingresarOferta()
+  + buscarOferta(codigo: String): OfertaAcademica
+    + verOfertas(): void
+    + editarOferta(codigo: String): void
+    + eliminarOferta(codigo: String): void
+    + verPerfil(): void
+    + editarPerfil(nombre: String, correo: String): void
+    + cerrarSesion(): void
+}
+}
+package vista{
+class VistaConsola{
+-sistema: SistemaOfertas
++VistaConsola(sistema:SistemaOfertas)
++iniciar():void
+}
+}
+
+SistemaOfertasUCN --> ContenedorOferta
+SistemaOfertasUCN --> Usuario
+SistemaOfertasUCN ..|> SistemaOfertas
+VistaConsola ..> SistemaOfertas
+ContenedorOferta o-- OfertaAcademica
+
+@enduml

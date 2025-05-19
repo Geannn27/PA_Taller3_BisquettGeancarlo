@@ -1,0 +1,55 @@
+@startuml
+'https://plantuml.com/class-diagram
+
+entity Usuario {
+  nombre
+  rut
+  correo
+  contrasenia
+}
+
+abstract OfertaAcademica {
+  codigo
+  titulo
+  descripcion
+  duracionDias
+}
+
+entity Ayudantia {
+  asignatura
+  rolAyudante
+  horaSemanales
+  promedioMinimo
+  tipoAyudantia
+}
+
+entity Capstone {
+  tipoProyecto
+  duracionMeses
+  carrerasHabilitadas
+  cantidadEstudiantes
+  fechaDeInicio
+  nombreEmpresa
+  nombreProfesorGuia
+}
+
+entity PracticaPreProfesional {
+  tieneRemuneracion
+  fechaDeInicio
+  nombreEmpresa
+  nombreProfesorGuia
+}
+
+entity Sistema {
+  usuarios
+  ofertas
+  usuarioActual
+}
+
+Ayudantia --|> OfertaAcademica
+Capstone --|> OfertaAcademica
+PracticaPreProfesional --|> OfertaAcademica
+
+Sistema "1" --> "*" Usuario
+Sistema "1" --> "*" OfertaAcademica
+@enduml
