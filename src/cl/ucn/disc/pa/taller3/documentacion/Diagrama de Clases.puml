@@ -14,15 +14,25 @@ class Usuario {
   + getCorreo(): String
   + validarContrasenia(clave: String): boolean
 }
+class ContenedorUsuarios{
+- usuarios: Usuario[]
+- cantidadActual:int
+- cantidadMaxima:int
++ContenedorUsuarios(cantidadMaxima:int)
++get(cantidadActual:int)
++agregar(nuevo:Usuario):void
++buscarPorRut(rut:String):int
++obtenerPorRut(rut:String):Usuario
++obtenerPorIndice(i:int):Usuario
+}
 abstract class OfertaAcademica {
   - codigo: String
   - titulo: String
   - descripcion: String
   - duracionDias: int
-
-  + OfertaAcademica(...)
-  + getCodigo(): String
-  + getResumen(): String
+  + OfertaAcademica(codigo: String, titulo:String, descripcion:String,
+   duracionDias:int)
+  + gets()
 }
 class Ayudantia extends OfertaAcademica {
   - asignatura: String
@@ -30,37 +40,42 @@ class Ayudantia extends OfertaAcademica {
   - horasSemanales: int
   - promedioMinimo: double
   - tipoAyudantia: String
-
-  + Ayudantia(...)
+  + Ayudantia(asignatura:String, rolAyudante:String, horasSemanales:int,promedioMinimo:double,tipoAyudantia:String)
+  +gets()
 }
-class Capstone extends OfertaAcademica {
-  - fechaInicio: Date
-  - nombreEmpresa: String
-  - nombreGuia: String
+class Capstone extends ActividadEmpresa {
   - tipoProyecto: String
   - duracionMeses: int
   - carrerasHabilitadas: String[]
   - cantidadEstudiantesMin: int
-
-  + Capstone(...)
+  + Capstone(tipoProyecto:String, duracionDias:int, carrerasHabilitadas:String[], cantidadEstudiantesMin:int)
+  +gets()
 }
-class PracticaPreProfesional extends OfertaAcademica {
-  - fechaInicio: Date
-  - nombreEmpresa: String
-  - nombreGuia: String
+class PracticaPreProfesional extends ActividadEmpresa {
   - tieneRemuneracion: boolean
-
-  + PracticaPreProfesional(...)
+  + PracticaPreProfesional(tieneRemuneracion:boolean)
+  +gets()
 }
 class ContenedorOferta {
   - ofertas: OfertaAcademica[]
   - cantidadActual: int
   - cantidadMaxima: int
-
-  + agregar(oferta: OfertaAcademica): void
-  + obtener(codigo: String): OfertaAcademica
+  +ContenedorOferta(cantidadMaxima:int)
+  +get(cantidadActual:int)
+  + agregar(nuevaOferta: OfertaAcademica): void
+  + buscarPorCodigo(codigo:String):int
+  + buscarPorTitulo(titulo:String):int
+  + obtener(posicion:int): OfertaAcademica
   + eliminar(codigo: String): void
   + listar(): OfertaAcademica[]
+}
+
+abstract class ActividadEmpresa extends OfertaAcademica{
+ - fechaInicio: Date
+  - nombreEmpresa: String
+  - nombreGuia: String
+  +ActividadEmpresa(fechaInicio:Date, nombreEmpresa:String,
+  nombreGuia:String)
 }
 }
 package servicio{
@@ -68,26 +83,30 @@ package servicio{
 interface SistemaOfertas {
   + registrarUsuario(nombre: String, rut: String, correo: String, contrasenia: String): void
   + iniciarSesion(rut: String, contrasenia: String): boolean
-  + ingresarOferta(): void
+  + ingresarOferta(nuevaOferta: OfertaAcademica): void
   + buscarOferta(codigo: String): OfertaAcademica
   + verOfertas(): void
-  + editarOferta(codigo: String): void
+  + editarOferta(codigo: String, nuevaOferta:OfertaAcademica): void
   + eliminarOferta(codigo: String): void
+  +buscarOfertaPorTitulo(titulo:String):OfertaAcademica
   + verPerfil(): void
   + editarPerfil(nombre: String, correo: String): void
   + cerrarSesion(): void
 }
 
 class SistemaOfertasUCN {
-  - usuarios: Usuario[]
+  - usuarios: Usuario
   - ofertas: ContenedorOferta
   - usuarioActual: Usuario
-  + registrarUsuario()
-  + iniciarSesion()
-  +ingresarOferta()
+  +SistemaOfertasUCN()
+ -lecturaDeArchivo():void
+  + registrarUsuario(nombre:String,rut:String,correo:String,contrasenia:String)
+  + iniciarSesion(rut:String,contrasenia:String)
+  +ingresarOferta(nuevaOferta: OfertaAcademica)
   + buscarOferta(codigo: String): OfertaAcademica
-    + verOfertas(): void
-    + editarOferta(codigo: String): void
+ + buscarOfertaPorTitulo(titulo:String):OfertaAcademica
+     + verOfertas(): void
+    + editarOferta(codigo: String,nuevaOferta: OfertaAcademica): void
     + eliminarOferta(codigo: String): void
     + verPerfil(): void
     + editarPerfil(nombre: String, correo: String): void
@@ -96,9 +115,19 @@ class SistemaOfertasUCN {
 }
 package vista{
 class VistaConsola{
--sistema: SistemaOfertas
+-sistemaOfertas: SistemaOfertas
 +VistaConsola(sistema:SistemaOfertas)
 +iniciar():void
++menuLogeo():void
++iniciarSesion():void
++registrarUsuario():void
++menuPrincipal():void
++ingresarOferta():void
++construirNuevaOferta():OfertaAcademica
++buscarOferta():void
++editarOferta():void
++eliminarOferta():void
++editarPerfil():void
 }
 }
 
@@ -107,5 +136,6 @@ SistemaOfertasUCN --> Usuario
 SistemaOfertasUCN ..|> SistemaOfertas
 VistaConsola ..> SistemaOfertas
 ContenedorOferta o-- OfertaAcademica
+ContenedorUsuarios o-- Usuario
 
 @enduml

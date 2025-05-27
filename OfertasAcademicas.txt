@@ -1,0 +1,8 @@
+A,001,Asistente de Laboratorio,Apoyo en el laboratorio de electrónica,DIE,90,Electrotécnia,Ayudante de Laboratorio,10,5.5
+A,002,Monitor de Programación,Asistencia a estudiantes en laboratorio de programación,DISC,60,Programación I,Monitor de Ayudantía,8,6.0
+C,003,Sistema de Monitoreo Ambiental,Desarrollo de un sistema de sensores ambientales,DISC,180,01-08-2025,EcoTech Ltda.,Dr. Ricardo Núñez,Capstone,6, "Informática|Electrónica|Civil Informática",3
+P,004,Práctica Desarrollo Web,Apoyo en desarrollo de sitios web y aplicaciones frontend,DISC,120,01-07-2025,SoftWeb Ltda.,Dra. Elena Castillo,No
+P,005,Práctica Profesional de Redes,Instalación y mantenimiento de redes de datos,DISC,45,10-06-2025,NetSolutions,Ing. Pedro Salinas,Si
+A,006,Ayudante de Cálculo,Resolución de dudas y apoyo en clases de cálculo diferencial,DIM,75,Cálculo I,Ayudante Teórico,6,5.8
+C,007,Desarrollo de App de Salud Mental,Aplicación móvil para acompañamiento psicológico,DISC,150,15-07-2025,MindCare,Dr. Felipe Zamora,Capstone,5,"Psicología|Informática",2
+P,008,Práctica en Minería de Datos,Análisis de datos para optimización de procesos,DIE,90,05-07-2025,DataChile SpA,Ing. Carolina Ruiz,Si
